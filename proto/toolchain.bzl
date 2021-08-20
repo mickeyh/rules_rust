@@ -98,7 +98,7 @@ def rust_generate_proto(
 
     args.add_joined(
         transitive_descriptor_sets,
-        join_with = ":",
+        join_with = ";",
         format_joined = "--descriptor_set_in=%s",
     )
 
