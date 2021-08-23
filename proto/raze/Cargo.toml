@@ -9,8 +9,8 @@ path = "fake_rules_rust_proto.rs"
 [dependencies]
 # Newer version of protobuf have been released, but the 0.6.2 release of
 # grpc-rust doesn't work with 2.10 or above, and the 2.9 release pulled.
-protobuf = { version = "2.8.2", features = ["with-bytes"] }
-protobuf-codegen = "2.8.2"
+protobuf = { git = "https://github.com/mickeyh/rust-protobuf.git", branch = "fixed" }
+protobuf-codegen = { git = "https://github.com/mickeyh/rust-protobuf.git", branch = "fixed" }
 grpc = "0.6.2"
 grpc-compiler = "0.6.2"
 # Newer version of tls-api have been released, but the 0.1 release is still
@@ -36,11 +36,11 @@ additional_flags = [
   "--cfg=lazy_static_heap_impl",
 ]
 
-[package.metadata.raze.crates.protobuf.'2.8.2']
-patches = ["@rules_rust//proto/raze/patch:protobuf-2.8.2.patch"]
-patch_args = ["-p1"]
+# [package.metadata.raze.crates.protobuf.'*']
+# patches = ["@rules_rust//proto/raze/patch:protobuf-2.8.2.patch"]
+# patch_args = ["-p1"]
 
-[package.metadata.raze.crates.protobuf-codegen.'2.8.2']
+[package.metadata.raze.crates.protobuf-codegen.'*']
 extra_aliased_targets = ["cargo_bin_protoc_gen_rust"]
 
 [package.metadata.raze.crates.grpc-compiler.'0.6.2']

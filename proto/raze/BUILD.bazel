@@ -50,7 +50,7 @@ alias(
 
 alias(
     name = "protobuf",
-    actual = "@rules_rust_proto__protobuf__2_8_2//:protobuf",
+    actual = "@rules_rust_proto__protobuf__3_0_0_pre//:protobuf",
     tags = [
         "cargo-raze",
         "manual",
@@ -58,8 +58,10 @@ alias(
 )
 
 alias(
+    # Extra aliased target, from raze configuration
+    # N.B.: The exact form of this is subject to change.
     name = "cargo_bin_protoc_gen_rust",
-    actual = "@rules_rust_proto__protobuf_codegen__2_8_2//:cargo_bin_protoc_gen_rust",
+    actual = "@rules_rust_proto__protobuf_codegen__3_0_0_pre//:cargo_bin_protoc_gen_rust",
     tags = [
         "cargo-raze",
         "manual",
@@ -68,11 +70,11 @@ alias(
 
 alias(
     name = "protobuf_codegen",
-    actual = "@rules_rust_proto__protobuf_codegen__2_8_2//:protobuf_codegen",
+    actual = "@rules_rust_proto__protobuf_codegen__3_0_0_pre//:protobuf_codegen",
     tags = [
         "cargo-raze",
         "manual",
-    ],
+   ],
 )
 
 alias(
