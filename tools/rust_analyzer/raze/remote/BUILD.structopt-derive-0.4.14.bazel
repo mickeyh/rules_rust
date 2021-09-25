@@ -10,9 +10,10 @@ load("@bazel_skylib//lib:selects.bzl", "selects")
 
 # buildifier: disable=load
 load(
-    "@rules_rust//rust:rust.bzl",
+    "@rules_rust//rust:defs.bzl",
     "rust_binary",
     "rust_library",
+    "rust_proc_macro",
     "rust_test",
 )
 
@@ -30,13 +31,12 @@ licenses([
 
 # Generated Targets
 
-rust_library(
+rust_proc_macro(
     name = "structopt_derive",
     srcs = glob(["**/*.rs"]),
     crate_features = [
     ],
     crate_root = "src/lib.rs",
-    crate_type = "proc-macro",
     data = [],
     edition = "2018",
     rustc_flags = [
@@ -49,10 +49,10 @@ rust_library(
     version = "0.4.14",
     # buildifier: leave-alone
     deps = [
-        "@rules_rust_tools_rust_analyzer__heck__0_3_2//:heck",
-        "@rules_rust_tools_rust_analyzer__proc_macro2__1_0_24//:proc_macro2",
-        "@rules_rust_tools_rust_analyzer__proc_macro_error__1_0_4//:proc_macro_error",
-        "@rules_rust_tools_rust_analyzer__quote__1_0_9//:quote",
-        "@rules_rust_tools_rust_analyzer__syn__1_0_60//:syn",
+        "@rr_tra__heck__0_3_2//:heck",
+        "@rr_tra__proc_macro2__1_0_24//:proc_macro2",
+        "@rr_tra__proc_macro_error__1_0_4//:proc_macro_error",
+        "@rr_tra__quote__1_0_9//:quote",
+        "@rr_tra__syn__1_0_60//:syn",
     ],
 )
