@@ -20,7 +20,7 @@ itertools = "0.10"
 [package.metadata.raze]
 genmode = "Remote"
 workspace_path = "//tools/rust_analyzer/raze"
-gen_workspace_prefix = "rules_rust_tools_rust_analyzer"
+gen_workspace_prefix = "rr_tra"
 rust_rules_workspace_name = "rules_rust"
 package_aliases_dir = "."
 default_gen_buildrs = true
