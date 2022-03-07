@@ -58,8 +58,6 @@ alias(
 )
 
 alias(
-    # Extra aliased target, from raze configuration
-    # N.B.: The exact form of this is subject to change.
     name = "cargo_bin_protoc_gen_rust",
     actual = "@rules_rust_proto__protobuf_codegen__3_0_0_pre//:cargo_bin_protoc_gen_rust",
     tags = [
@@ -74,7 +72,7 @@ alias(
     tags = [
         "cargo-raze",
         "manual",
-   ],
+    ],
 )
 
 alias(
