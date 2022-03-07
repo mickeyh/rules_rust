@@ -77,7 +77,7 @@ rust_library(
     data = [],
     edition = "2015",
     proc_macro_deps = [
-        "@rules_rust_tools_rust_analyzer__serde_derive__1_0_130//:serde_derive",
+        "@rr_tra__serde_derive__1_0_130//:serde_derive",
     ],
     rustc_flags = [
         "--cap-lints=allow",

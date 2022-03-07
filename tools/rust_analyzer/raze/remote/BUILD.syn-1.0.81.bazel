@@ -99,9 +99,9 @@ rust_library(
     # buildifier: leave-alone
     deps = [
         ":syn_build_script",
-        "@rules_rust_tools_rust_analyzer__proc_macro2__1_0_32//:proc_macro2",
-        "@rules_rust_tools_rust_analyzer__quote__1_0_10//:quote",
-        "@rules_rust_tools_rust_analyzer__unicode_xid__0_2_2//:unicode_xid",
+        "@rr_tra__proc_macro2__1_0_32//:proc_macro2",
+        "@rr_tra__quote__1_0_10//:quote",
+        "@rr_tra__unicode_xid__0_2_2//:unicode_xid",
     ],
 )
 

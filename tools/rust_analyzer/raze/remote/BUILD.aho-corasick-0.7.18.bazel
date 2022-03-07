@@ -51,6 +51,6 @@ rust_library(
     version = "0.7.18",
     # buildifier: leave-alone
     deps = [
-        "@rules_rust_tools_rust_analyzer__memchr__2_4_1//:memchr",
+        "@rr_tra__memchr__2_4_1//:memchr",
     ],
 )

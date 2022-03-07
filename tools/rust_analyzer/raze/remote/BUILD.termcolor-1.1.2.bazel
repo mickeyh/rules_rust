@@ -57,7 +57,7 @@ rust_library(
             "@rules_rust//rust/platform:i686-pc-windows-msvc",
             "@rules_rust//rust/platform:x86_64-pc-windows-msvc",
         ): [
-            "@rules_rust_tools_rust_analyzer__winapi_util__0_1_5//:winapi_util",
+            "@rr_tra__winapi_util__0_1_5//:winapi_util",
         ],
         "//conditions:default": [],
     }),
