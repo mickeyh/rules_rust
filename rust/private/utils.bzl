@@ -117,10 +117,12 @@ def get_lib_name(lib):
     # The library name is now everything minus the extension.
     libname = ".".join(comps[:-1])
 
-    if libname.startswith("lib"):
-        return libname[3:]
-    else:
-        return libname
+    # NOTE: I think that in between the last two updates, some other location in the codebase must have added a `lib` strip, which is why we have to remove this one for `libc`.
+    # if libname.startswith("lib"):
+    #     return libname[3:]
+    # else:
+    #     return libname
+    return libname
 
 def abs(value):
     """Returns the absolute value of a number.
