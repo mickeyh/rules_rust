@@ -85,7 +85,7 @@ rust_library(
     data = [],
     edition = "2018",
     proc_macro_deps = [
-        "@rules_rust_tools_rust_analyzer__structopt_derive__0_4_18//:structopt_derive",
+        "@rr_tra__structopt_derive__0_4_18//:structopt_derive",
     ],
     rustc_flags = [
         "--cap-lints=allow",
@@ -98,8 +98,8 @@ rust_library(
     version = "0.3.25",
     # buildifier: leave-alone
     deps = [
-        "@rules_rust_tools_rust_analyzer__clap__2_33_3//:clap",
-        "@rules_rust_tools_rust_analyzer__lazy_static__1_4_0//:lazy_static",
+        "@rr_tra__clap__2_33_3//:clap",
+        "@rr_tra__lazy_static__1_4_0//:lazy_static",
     ],
 )
 

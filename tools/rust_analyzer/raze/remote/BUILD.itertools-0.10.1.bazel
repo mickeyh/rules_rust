@@ -71,7 +71,7 @@ rust_library(
     version = "0.10.1",
     # buildifier: leave-alone
     deps = [
-        "@rules_rust_tools_rust_analyzer__either__1_6_1//:either",
+        "@rr_tra__either__1_6_1//:either",
     ],
 )
 
