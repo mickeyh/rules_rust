@@ -378,13 +378,16 @@ def rules_rust_proto_fetch_remote_crates():
         type = "tar.gz",
         sha256 = "70731852eec72c56d11226c8a5f96ad5058a3dab73647ca5f7ee351e464f2571",
         strip_prefix = "protobuf-2.8.2",
-        patches = [
-            "@rules_rust//proto/raze/patch:protobuf-2.8.2.patch",
-        ],
-        patch_args = [
-            "-p1",
-        ],
         build_file = Label("//proto/raze/remote:BUILD.protobuf-2.8.2.bazel"),
+    )
+
+    maybe(
+        new_git_repository,
+        name = "rules_rust_proto__protobuf__3_0_0_pre",
+        remote = "https://github.com/mickeyh/rust-protobuf.git",
+        commit = "0ca6db15b1323b553a81d3117abe0a7ab0c55361",
+        build_file = Label("//proto/raze/remote:BUILD.protobuf-3.0.0-pre.bazel"),
+        init_submodules = True,
     )
 
     maybe(
@@ -395,6 +398,15 @@ def rules_rust_proto_fetch_remote_crates():
         sha256 = "3d74b9cbbf2ac9a7169c85a3714ec16c51ee9ec7cfd511549527e9a7df720795",
         strip_prefix = "protobuf-codegen-2.8.2",
         build_file = Label("//proto/raze/remote:BUILD.protobuf-codegen-2.8.2.bazel"),
+    )
+
+    maybe(
+        new_git_repository,
+        name = "rules_rust_proto__protobuf_codegen__3_0_0_pre",
+        remote = "https://github.com/mickeyh/rust-protobuf.git",
+        commit = "0ca6db15b1323b553a81d3117abe0a7ab0c55361",
+        build_file = Label("//proto/raze/remote:BUILD.protobuf-codegen-3.0.0-pre.bazel"),
+        init_submodules = True,
     )
 
     maybe(
