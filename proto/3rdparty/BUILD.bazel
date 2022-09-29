@@ -9,10 +9,6 @@ crates_vendor(
                 "--cfg=lazy_static_heap_impl",
             ],
         )],
-        "protobuf": [crate.annotation(
-            patch_args = ["-p1"],
-            patches = ["@rules_rust//proto/3rdparty/patches:protobuf-2.8.2.patch"],
-        )],
     },
     cargo_lockfile = "Cargo.Bazel.lock",
     mode = "remote",
@@ -28,10 +24,12 @@ crates_vendor(
         ),
         "protobuf": crate.spec(
             features = ["with-bytes"],
-            version = "2.8.2",
+	    git = "https://github.com/mickeyh/rust-protobuf.git",
+	    rev = "626a6ce92f6461aa55c6ffc76938a932a3fd629f", # fixed_22_09_28
         ),
         "protobuf-codegen": crate.spec(
-            version = "2.8.2",
+	    git = "https://github.com/mickeyh/rust-protobuf.git",
+	    rev = "626a6ce92f6461aa55c6ffc76938a932a3fd629f", # fixed_22_09_28
         ),
         "tls-api": crate.spec(
             version = "0.1.22",
