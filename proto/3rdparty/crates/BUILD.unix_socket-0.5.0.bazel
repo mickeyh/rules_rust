@@ -86,7 +86,7 @@ rust_library(
     ] + select_with_or({
         "//conditions:default": [
             "@rules_rust_proto__cfg-if-0.1.10//:cfg_if",
-            "@rules_rust_proto__libc-0.2.126//:libc",
+            "@rules_rust_proto__libc-0.2.133//:libc",
         ],
     }),
 )

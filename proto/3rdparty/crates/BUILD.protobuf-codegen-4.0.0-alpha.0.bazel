@@ -10,26 +10,23 @@ load(
     "@bazel_skylib//lib:selects.bzl",
     "selects",
 )
-load(
-    "@rules_rust//cargo:defs.bzl",
-    "cargo_build_script",
-)
 
 # buildifier: disable=bzl-visibility
 load("@rules_rust//crate_universe/private:selects.bzl", "select_with_or")
 load(
     "@rules_rust//rust:defs.bzl",
+    "rust_binary",
     "rust_library",
 )
 
 package(default_visibility = ["//visibility:public"])
 
 # licenses([
-#     "TODO",  # MIT/Apache-2.0
+#     "TODO",  # MIT
 # ])
 
 rust_library(
-    name = "winapi",
+    name = "protobuf_codegen",
     srcs = glob(
         include = [
             "**/*.rs",
@@ -54,26 +51,13 @@ rust_library(
         ],
     }),
     crate_features = [
-        "errhandlingapi",
-        "fileapi",
-        "handleapi",
-        "minwindef",
-        "ntstatus",
-        "std",
-        "winbase",
-        "winerror",
-        "winnt",
-        "winsock2",
-        "ws2def",
-        "ws2ipdef",
-        "ws2tcpip",
     ],
     crate_root = "src/lib.rs",
     data = select_with_or({
         "//conditions:default": [
         ],
     }),
-    edition = "2015",
+    edition = "2021",
     proc_macro_deps = [
     ] + select_with_or({
         "//conditions:default": [
@@ -98,28 +82,23 @@ rust_library(
         "noclippy",
         "norustfmt",
     ],
-    version = "0.3.9",
+    version = "4.0.0-alpha.0",
     deps = [
     ] + select_with_or({
-        # i686-pc-windows-gnu
-        #
-        # No supported platform triples for cfg: 'i686-pc-windows-gnu'
-        # Skipped dependencies: [{"id":"winapi-i686-pc-windows-gnu 0.4.0","target":"winapi_i686_pc_windows_gnu"}]
-        #
-        # x86_64-pc-windows-gnu
-        #
-        # No supported platform triples for cfg: 'x86_64-pc-windows-gnu'
-        # Skipped dependencies: [{"id":"winapi-x86_64-pc-windows-gnu 0.4.0","target":"winapi_x86_64_pc_windows_gnu"}]
-        #
         "//conditions:default": [
-            "@rules_rust_proto__winapi-0.3.9//:build_script_build",
+            "@rules_rust_proto__anyhow-1.0.65//:anyhow",
+            "@rules_rust_proto__once_cell-1.15.0//:once_cell",
+            "@rules_rust_proto__protobuf-4.0.0-alpha.0//:protobuf",
+            "@rules_rust_proto__protobuf-parse-4.0.0-alpha.0//:protobuf_parse",
+            "@rules_rust_proto__regex-1.6.0//:regex",
+            "@rules_rust_proto__tempfile-3.3.0//:tempfile",
+            "@rules_rust_proto__thiserror-1.0.37//:thiserror",
         ],
     }),
 )
 
-cargo_build_script(
-    # See comment associated with alias. Do not change this name
-    name = "winapi_build_script",
+rust_binary(
+    name = "protoc-gen-rust__bin",
     srcs = glob(
         include = [
             "**/*.rs",
@@ -131,34 +110,26 @@ cargo_build_script(
         "//conditions:default": {
         },
     }),
-    build_script_env = {
-    },
-    compile_data = select_with_or({
+    compile_data = glob(
+        include = ["**"],
+        exclude = [
+            "BUILD",
+            "BUILD.bazel",
+            "WORKSPACE",
+            "WORKSPACE.bazel",
+        ],
+    ) + select_with_or({
         "//conditions:default": [
         ],
     }),
     crate_features = [
-        "errhandlingapi",
-        "fileapi",
-        "handleapi",
-        "minwindef",
-        "ntstatus",
-        "std",
-        "winbase",
-        "winerror",
-        "winnt",
-        "winsock2",
-        "ws2def",
-        "ws2ipdef",
-        "ws2tcpip",
     ],
-    crate_name = "build_script_build",
-    crate_root = "build.rs",
-    data = glob(["**"]) + select_with_or({
+    crate_root = "src/bin/protoc-gen-rust.rs",
+    data = select_with_or({
         "//conditions:default": [
         ],
     }),
-    edition = "2015",
+    edition = "2021",
     proc_macro_deps = [
     ] + select_with_or({
         "//conditions:default": [
@@ -183,28 +154,18 @@ cargo_build_script(
         "noclippy",
         "norustfmt",
     ],
-    tools = select_with_or({
-        "//conditions:default": [
-        ],
-    }),
-    version = "0.3.9",
-    visibility = ["//visibility:private"],
+    version = "4.0.0-alpha.0",
     deps = [
+        ":protobuf_codegen",
     ] + select_with_or({
         "//conditions:default": [
+            "@rules_rust_proto__anyhow-1.0.65//:anyhow",
+            "@rules_rust_proto__once_cell-1.15.0//:once_cell",
+            "@rules_rust_proto__protobuf-4.0.0-alpha.0//:protobuf",
+            "@rules_rust_proto__protobuf-parse-4.0.0-alpha.0//:protobuf_parse",
+            "@rules_rust_proto__regex-1.6.0//:regex",
+            "@rules_rust_proto__tempfile-3.3.0//:tempfile",
+            "@rules_rust_proto__thiserror-1.0.37//:thiserror",
         ],
     }),
-)
-
-alias(
-    # Because `cargo_build_script` does some invisible target name mutating to
-    # determine the package and crate name for a build script, the Bazel
-    # target namename of any build script cannot be the Cargo canonical name
-    # of `build_script_build` without losing out on having certain Cargo
-    # environment variables set.
-    name = "build_script_build",
-    actual = "winapi_build_script",
-    tags = [
-        "manual",
-    ],
 )
