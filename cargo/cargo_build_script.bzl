@@ -2,6 +2,7 @@
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@bazel_tools//tools/build_defs/cc:action_names.bzl", "CPP_COMPILE_ACTION_NAME", "C_COMPILE_ACTION_NAME")
 load("@bazel_tools//tools/cpp:toolchain_utils.bzl", "find_cpp_toolchain")
+load("//rust/private:utils.bzl", "transform_deps")
 load("//rust:defs.bzl", "rust_binary", "rust_common")
 
 # buildifier: disable=bzl-visibility
@@ -130,7 +131,8 @@ def _build_script_impl(ctx):
     # Pull in env vars which may be required for the cc_toolchain to work (e.g. on OSX, the SDK version).
     # We hope that the linker env is sufficient for the whole cc_toolchain.
     cc_toolchain, feature_configuration = find_cc_toolchain(ctx)
-    linker, link_args, linker_env = get_linker_and_args(ctx, ctx.attr, cc_toolchain, feature_configuration, None)
+    deps = transform_deps(ctx.attr.deps)
+    linker, link_args, linker_env = get_linker_and_args(ctx, deps, cc_toolchain, feature_configuration, None)
     env.update(**linker_env)
     env["LD"] = linker
     env["LDFLAGS"] = " ".join(_pwd_flags(link_args))
