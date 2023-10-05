@@ -16,7 +16,7 @@ package(default_visibility = ["//visibility:public"])
 # ])
 
 rust_library(
-    name = "libc",
+    name = "proc_macro2",
     srcs = glob(["**/*.rs"]),
     compile_data = glob(
         include = ["**"],
@@ -31,15 +31,14 @@ rust_library(
     ),
     crate_features = [
         "default",
-        "extra_traits",
-        "std",
+        "proc-macro",
     ],
     crate_root = "src/lib.rs",
-    edition = "2015",
+    edition = "2021",
     rustc_flags = ["--cap-lints=allow"],
     tags = [
         "cargo-bazel",
-        "crate-name=libc",
+        "crate-name=proc-macro2",
         "manual",
         "noclippy",
         "norustfmt",
@@ -78,19 +77,19 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.2.139",
+    version = "1.0.67",
     deps = [
-        "@rules_rust_proto__libc-0.2.139//:build_script_build",
+        "@rules_rust_proto__proc-macro2-1.0.67//:build_script_build",
+        "@rules_rust_proto__unicode-ident-1.0.12//:unicode_ident",
     ],
 )
 
 cargo_build_script(
-    name = "libc_build_script",
+    name = "proc-macro2_build_script",
     srcs = glob(["**/*.rs"]),
     crate_features = [
         "default",
-        "extra_traits",
-        "std",
+        "proc-macro",
     ],
     crate_name = "build_script_build",
     crate_root = "build.rs",
@@ -105,23 +104,23 @@ cargo_build_script(
             "WORKSPACE.bazel",
         ],
     ),
-    edition = "2015",
+    edition = "2021",
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=libc",
+        "crate-name=proc-macro2",
         "manual",
         "noclippy",
         "norustfmt",
     ],
-    version = "0.2.139",
+    version = "1.0.67",
     visibility = ["//visibility:private"],
 )
 
 alias(
     name = "build_script_build",
-    actual = "libc_build_script",
+    actual = "proc-macro2_build_script",
     tags = ["manual"],
 )
