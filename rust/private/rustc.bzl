@@ -389,12 +389,13 @@ def get_cc_user_link_flags(ctx):
     """
     return ctx.fragments.cpp.linkopts
 
-def get_linker_and_args(ctx, attr, crate_type, cc_toolchain, feature_configuration, rpaths, rustdoc = False):
+def get_linker_and_args(ctx, deps, crate_type, cc_toolchain, feature_configuration, rpaths, rustdoc = False):
     """Gathers cc_common linker information
 
     Args:
         ctx (ctx): The current target's context object
-        attr (struct): Attributes to use in gathering linker args
+        deps (list of DepVariantInfos): Current target's dependencies (to use
+            in gathering linker args).
         crate_type (str): The target crate's type (i.e. "bin", "proc-macro", etc.).
         cc_toolchain (CcToolchain): cc_toolchain for which we are creating build variables.
         feature_configuration (FeatureConfiguration): Feature configuration to be queried.
@@ -430,9 +431,9 @@ def get_linker_and_args(ctx, attr, crate_type, cc_toolchain, feature_configurati
 
     # Add linkopt's from dependencies. This includes linkopts from transitive
     # dependencies since they get merged up.
-    for dep in getattr(attr, "deps", []):
-        if CcInfo in dep and dep[CcInfo].linking_context:
-            for linker_input in dep[CcInfo].linking_context.linker_inputs.to_list():
+    for dep in deps:
+        if dep.cc_info and dep.cc_info.linking_context:
+            for linker_input in dep.cc_info.linking_context.linker_inputs.to_list():
                 for flag in linker_input.user_link_flags:
                     user_link_flags.append(flag)
     link_variables = cc_common.create_link_variables(
@@ -992,7 +993,7 @@ def construct_arguments(
             else:
                 rpaths = depset()
 
-            ld, link_args, link_env = get_linker_and_args(ctx, attr, crate_info.type, cc_toolchain, feature_configuration, rpaths, rustdoc)
+            ld, link_args, link_env = get_linker_and_args(ctx, crate_info.deps.to_list(), crate_info.type, cc_toolchain, feature_configuration, rpaths, rustdoc)
 
             env.update(link_env)
             rustc_flags.add(ld, format = "--codegen=linker=%s")
