@@ -42,6 +42,7 @@ def rust_generate_proto(
         imports,
         output_dir,
         proto_toolchain,
+        target_os,
         is_grpc = False):
     """Generate a proto compilation action.
 
@@ -52,6 +53,7 @@ def rust_generate_proto(
         imports (depset): directory, relative to the package, to output the list of stubs.
         output_dir (str): The basename of the output directory for for the output generated stubs
         proto_toolchain (ToolchainInfo): The toolchain for rust-proto compilation. See `rust_proto_toolchain`
+        target_os (str): OS of execution platform
         is_grpc (bool, optional): generate gRPC stubs. Defaults to False.
 
     Returns:
@@ -94,9 +96,10 @@ def rust_generate_proto(
         "--rust_out=" + output_directory,
     ])
 
+    separator = ";" if target_os.startswith("windows") else ":"
     args.add_joined(
         transitive_descriptor_sets,
-        join_with = ":",
+        join_with = separator,
         format_joined = "--descriptor_set_in=%s",
     )
 

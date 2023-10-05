@@ -180,6 +180,8 @@ def _rust_proto_compile(protos, descriptor_sets, imports, crate_name, ctx, is_gr
         output_dir = output_dir,
         proto_toolchain = proto_toolchain,
         is_grpc = is_grpc,
+        # NOTE: Is there a `host_os` instead of `target_os`?
+        target_os = toolchain.target_os,
     )
 
     # and lib.rs
